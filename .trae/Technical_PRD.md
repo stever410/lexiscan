@@ -139,7 +139,7 @@ graph TD
 
 ## 6. MVP Development Phases
 
-1.  **Phase 1: Project Setup**: Init Flutter, Shadcn, Riverpod setup.
+1.  **Phase 1: Project Setup**: Init Flutter, Shadcn, MobX setup.
 2.  **Phase 2: Camera & OCR**: Implement Image Picker and ML Kit extraction.
 3.  **Phase 3: Dictionary Engine**: Setup SQLite (Drift) and seed with sample English data.
 4.  **Phase 4: UI Integration**: Build "Scan Screen" and "Result Sheet" using `shadcn_flutter`.

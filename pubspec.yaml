@@ -45,6 +45,7 @@ dependencies:
   path: ^1.9.1
   flutter_lucide: ^1.7.0
   shadcn_ui: ^0.27.1
+  get_it: ^9.2.0
 
 dev_dependencies:
   flutter_test:

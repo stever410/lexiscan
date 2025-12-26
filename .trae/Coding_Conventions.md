@@ -36,7 +36,7 @@ lib/
 - **Variables/Functions**: `camelCase` (e.g., `fetchDefinition`, `isLoading`)
 - **Files**: `snake_case` (e.g., `scan_screen.dart`, `word_repository.dart`)
 - **Constants**: `kPascalCase` or `SCREAMING_SNAKE_CASE` (e.g., `kMaxRetryCount`, `API_KEY`)
-- **Riverpod Providers**: `camelCase` ending with `Provider` (e.g., `dictionaryRepositoryProvider`, `scanResultsProvider`)
+- **MobX Stores**: `PascalCase` ending with `Store` (e.g., `DictionaryStore`, `ScanStore`)
 
 ---
 
@@ -58,24 +58,49 @@ lib/
 
 ---
 
-## 4. State Management (Riverpod)
+## 4. State Management (MobX)
 
-### 4.1 Controllers
+### 4.1 Stores
 
-- Use `AsyncNotifier` for async state (loading, error, data).
-- **Avoid** `StateProvider` for complex logic; use `Notifier` or `AsyncNotifier`.
+- Use **MobX Stores** for managing state.
+- Classes should use the `@store` annotation (or mixin) and be generated using `mobx_codegen`.
+- State variables should be marked with `@observable`.
+- Methods modifying state should be marked with `@action`.
+- Derived state should be marked with `@computed`.
 
-### 4.2 Dependency Injection
+### 4.2 UI Integration
 
-- All repositories and services must be accessed via providers.
-- **Do not** create instances of repositories directly in widgets.
+- Use the `Observer` widget from `flutter_mobx` to wrap parts of the UI that depend on observable state.
+- Keep the `Observer` as granular as possible to minimize re-builds.
 
 ```dart
 // Good
-final repo = ref.watch(dictionaryRepositoryProvider);
+Observer(
+  builder: (_) {
+    if (store.isLoading) return CircularProgressIndicator();
+    return Text(store.data);
+  }
+)
+```
 
-// Bad
-final repo = DictionaryRepository();
+### 4.3 Dependency Injection
+
+- Stores can be instantiated as global singletons or passed via a service locator (like `get_it`) or simple constructor injection.
+- Ensure stores are testable by allowing dependency injection in constructors.
+
+```dart
+// Example Store
+class ScanStore = _ScanStore with _$ScanStore;
+
+abstract class _ScanStore with Store {
+  @observable
+  bool isLoading = false;
+
+  @action
+  Future<void> scanImage() async {
+    // ...
+  }
+}
 ```
 
 ---
