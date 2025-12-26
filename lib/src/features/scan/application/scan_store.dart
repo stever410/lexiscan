@@ -1,4 +1,6 @@
+import 'dart:ui';
 import 'package:get_it/get_it.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lexiscan/src/features/scan/data/image_service.dart';
 import 'package:lexiscan/src/features/scan/data/ocr_service.dart';
@@ -19,7 +21,10 @@ abstract class _ScanStore with Store {
   String? imagePath;
 
   @observable
-  String? recognizedText;
+  RecognizedText? recognizedText;
+
+  @observable
+  ObservableList<Rect> selectedBoxes = ObservableList<Rect>();
 
   @observable
   bool isLoading = false;
@@ -27,11 +32,28 @@ abstract class _ScanStore with Store {
   @observable
   String? error;
 
+  @computed
+  List<String> get selectedWords {
+    if (recognizedText == null) return [];
+    final words = <String>[];
+    for (final block in recognizedText!.blocks) {
+      for (final line in block.lines) {
+        for (final element in line.elements) {
+          if (selectedBoxes.contains(element.boundingBox)) {
+            words.add(element.text);
+          }
+        }
+      }
+    }
+    return words;
+  }
+
   @action
   Future<void> pickImage(ImageSource source) async {
     try {
       isLoading = true;
       error = null;
+      selectedBoxes.clear();
       final String? path = await _imageService.pickImage(source);
       if (path != null) {
         imagePath = path;
@@ -51,6 +73,20 @@ abstract class _ScanStore with Store {
     } catch (e) {
       error = 'OCR Failed: ${e.toString()}';
     }
+  }
+
+  @action
+  void toggleSelection(Rect box) {
+    if (selectedBoxes.contains(box)) {
+      selectedBoxes.remove(box);
+    } else {
+      selectedBoxes.add(box);
+    }
+  }
+
+  @action
+  void clearSelection() {
+    selectedBoxes.clear();
   }
 
   void dispose() {

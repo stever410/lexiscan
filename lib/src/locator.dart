@@ -1,7 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:lexiscan/src/features/scan/application/scan_store.dart';
 import 'package:lexiscan/src/features/scan/data/image_service.dart';
 import 'package:lexiscan/src/features/scan/data/ocr_service.dart';
-import 'package:lexiscan/src/features/scan/presentation/scan_store.dart';
 
 final getIt = GetIt.instance;
 
