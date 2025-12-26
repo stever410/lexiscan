@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:lexiscan/app.dart';
 
 void main() {
-  runApp(
-    const ProviderScope(
-      child: LexiScanApp(),
-    ),
-  );
+  runApp(const LexiScanApp());
 }
