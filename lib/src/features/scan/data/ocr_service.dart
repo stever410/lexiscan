@@ -3,9 +3,13 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 class OCRService {
   final _textRecognizer = TextRecognizer();
 
-  Future<RecognizedText> processImage(String path) async {
+  Future<String> processImage(String path) async {
     final inputImage = InputImage.fromFilePath(path);
-    return await _textRecognizer.processImage(inputImage);
+    final RecognizedText recognizedText = await _textRecognizer.processImage(
+      inputImage,
+    );
+
+    return recognizedText.text;
   }
 
   void dispose() {

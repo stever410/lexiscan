@@ -44,7 +44,7 @@ dependencies:
   path_provider: ^2.1.5
   path: ^1.9.1
   flutter_lucide: ^1.7.0
-  shadcn_ui: ^0.27.1
+  shadcn_ui: ^0.43.0
   get_it: ^9.2.0
 
 dev_dependencies:
@@ -56,9 +56,9 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
   build_runner: ^2.5.4
-  drift_dev: 2.24.0
+  drift_dev: ^2.30.0
   mobx_codegen: ^2.3.0
 
 # For information on the generic Dart part of this file, see the

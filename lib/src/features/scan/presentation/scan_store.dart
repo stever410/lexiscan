@@ -1,5 +1,4 @@
 import 'package:get_it/get_it.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lexiscan/src/features/scan/data/image_service.dart';
 import 'package:lexiscan/src/features/scan/data/ocr_service.dart';
@@ -20,7 +19,7 @@ abstract class _ScanStore with Store {
   String? imagePath;
 
   @observable
-  RecognizedText? recognizedText;
+  String? recognizedText;
 
   @observable
   bool isLoading = false;
