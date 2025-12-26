@@ -8,19 +8,19 @@ part of 'scan_store.dart';
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
-mixin _$ScanStore on _ScanStore, Store {
+mixin _$ScanStore on ScanStoreBase, Store {
   Computed<List<String>>? _$selectedWordsComputed;
 
   @override
   List<String> get selectedWords =>
       (_$selectedWordsComputed ??= Computed<List<String>>(
             () => super.selectedWords,
-            name: '_ScanStore.selectedWords',
+            name: 'ScanStoreBase.selectedWords',
           ))
           .value;
 
   late final _$imagePathAtom = Atom(
-    name: '_ScanStore.imagePath',
+    name: 'ScanStoreBase.imagePath',
     context: context,
   );
 
@@ -38,7 +38,7 @@ mixin _$ScanStore on _ScanStore, Store {
   }
 
   late final _$recognizedTextAtom = Atom(
-    name: '_ScanStore.recognizedText',
+    name: 'ScanStoreBase.recognizedText',
     context: context,
   );
 
@@ -56,7 +56,7 @@ mixin _$ScanStore on _ScanStore, Store {
   }
 
   late final _$selectedBoxesAtom = Atom(
-    name: '_ScanStore.selectedBoxes',
+    name: 'ScanStoreBase.selectedBoxes',
     context: context,
   );
 
@@ -74,7 +74,7 @@ mixin _$ScanStore on _ScanStore, Store {
   }
 
   late final _$isLoadingAtom = Atom(
-    name: '_ScanStore.isLoading',
+    name: 'ScanStoreBase.isLoading',
     context: context,
   );
 
@@ -91,7 +91,7 @@ mixin _$ScanStore on _ScanStore, Store {
     });
   }
 
-  late final _$errorAtom = Atom(name: '_ScanStore.error', context: context);
+  late final _$errorAtom = Atom(name: 'ScanStoreBase.error', context: context);
 
   @override
   String? get error {
@@ -107,7 +107,7 @@ mixin _$ScanStore on _ScanStore, Store {
   }
 
   late final _$pickImageAsyncAction = AsyncAction(
-    '_ScanStore.pickImage',
+    'ScanStoreBase.pickImage',
     context: context,
   );
 
@@ -117,7 +117,7 @@ mixin _$ScanStore on _ScanStore, Store {
   }
 
   late final _$_processImageAsyncAction = AsyncAction(
-    '_ScanStore._processImage',
+    'ScanStoreBase._processImage',
     context: context,
   );
 
@@ -126,32 +126,32 @@ mixin _$ScanStore on _ScanStore, Store {
     return _$_processImageAsyncAction.run(() => super._processImage(path));
   }
 
-  late final _$_ScanStoreActionController = ActionController(
-    name: '_ScanStore',
+  late final _$ScanStoreBaseActionController = ActionController(
+    name: 'ScanStoreBase',
     context: context,
   );
 
   @override
   void toggleSelection(Rect box) {
-    final _$actionInfo = _$_ScanStoreActionController.startAction(
-      name: '_ScanStore.toggleSelection',
+    final _$actionInfo = _$ScanStoreBaseActionController.startAction(
+      name: 'ScanStoreBase.toggleSelection',
     );
     try {
       return super.toggleSelection(box);
     } finally {
-      _$_ScanStoreActionController.endAction(_$actionInfo);
+      _$ScanStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 
   @override
   void clearSelection() {
-    final _$actionInfo = _$_ScanStoreActionController.startAction(
-      name: '_ScanStore.clearSelection',
+    final _$actionInfo = _$ScanStoreBaseActionController.startAction(
+      name: 'ScanStoreBase.clearSelection',
     );
     try {
       return super.clearSelection();
     } finally {
-      _$_ScanStoreActionController.endAction(_$actionInfo);
+      _$ScanStoreBaseActionController.endAction(_$actionInfo);
     }
   }
 

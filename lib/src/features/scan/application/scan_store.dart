@@ -8,10 +8,10 @@ import 'package:mobx/mobx.dart';
 
 part 'scan_store.g.dart';
 
-class ScanStore = _ScanStore with _$ScanStore;
+class ScanStore = ScanStoreBase with _$ScanStore;
 
-abstract class _ScanStore with Store {
-  _ScanStore({OCRService? ocrService, ImageService? imageService})
+abstract class ScanStoreBase with Store {
+  ScanStoreBase({OCRService? ocrService, ImageService? imageService})
     : _ocrService = ocrService ?? GetIt.I<OCRService>(),
       _imageService = imageService ?? GetIt.I<ImageService>();
   final OCRService _ocrService;
@@ -34,7 +34,9 @@ abstract class _ScanStore with Store {
 
   @computed
   List<String> get selectedWords {
-    if (recognizedText == null) return [];
+    if (recognizedText == null) {
+      return [];
+    }
     final words = <String>[];
     for (final block in recognizedText!.blocks) {
       for (final line in block.lines) {

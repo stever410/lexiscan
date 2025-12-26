@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_lucide/flutter_lucide.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:lexiscan/src/features/scan/application/scan_store.dart';
-import 'package:lexiscan/src/features/scan/presentation/home/widgets/scan_option_card.dart';
+import 'package:lexiscan/src/features/scan/scan.dart';
 import 'package:shadcn_ui/shadcn_ui.dart' hide LucideIcons;
 
 class ScanHomeView extends StatelessWidget {
@@ -12,6 +11,7 @@ class ScanHomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = ShadTheme.of(context);
+    // Use the same singleton instance
     final store = GetIt.I<ScanStore>();
 
     return SingleChildScrollView(

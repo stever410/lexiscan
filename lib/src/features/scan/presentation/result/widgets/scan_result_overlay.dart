@@ -48,7 +48,9 @@ class _ScanResultOverlayState extends State<ScanResultOverlay> {
   }
 
   void _handleTap(TapUpDetails details, BoxConstraints constraints) {
-    if (_image == null) return;
+    if (_image == null) {
+      return;
+    }
 
     // Calculate scale factor
     final double scaleX = _image!.width / constraints.maxWidth;
@@ -130,30 +132,30 @@ class TextSelectionPainter extends CustomPainter {
     // Paint configuration for highlights
     final Paint highlightPaint =
         Paint()
-          ..color = Colors.yellow.withOpacity(0.4)
+          ..color = Colors.yellow.withValues(alpha: 0.4)
           ..style = PaintingStyle.fill;
 
     final Paint borderPaint =
         Paint()
-          ..color = Colors.blue.withOpacity(0.3)
+          ..color = Colors.blue.withValues(alpha: 0.3)
           ..style = PaintingStyle.stroke
           ..strokeWidth = 1.0;
 
     // Draw bounding boxes for all elements (optional: hint to user)
-    // for (final block in recognizedText.blocks) {
-    //   for (final line in block.lines) {
-    //     for (final element in line.elements) {
-    //       final rect = element.boundingBox;
-    //       final scaledRect = Rect.fromLTRB(
-    //         rect.left * scaleX,
-    //         rect.top * scaleY,
-    //         rect.right * scaleX,
-    //         rect.bottom * scaleY,
-    //       );
-    //       canvas.drawRect(scaledRect, borderPaint);
-    //     }
-    //   }
-    // }
+    for (final block in recognizedText.blocks) {
+      for (final line in block.lines) {
+        for (final element in line.elements) {
+          final rect = element.boundingBox;
+          final scaledRect = Rect.fromLTRB(
+            rect.left * scaleX,
+            rect.top * scaleY,
+            rect.right * scaleX,
+            rect.bottom * scaleY,
+          );
+          canvas.drawRect(scaledRect, borderPaint);
+        }
+      }
+    }
 
     // Draw selected highlights
     for (final rect in selectedBoxes) {

@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get_it/get_it.dart';
-import 'package:lexiscan/src/features/scan/application/scan_store.dart';
-import 'package:lexiscan/src/features/scan/presentation/home/scan_home_view.dart';
-import 'package:lexiscan/src/features/scan/presentation/result/scan_result_view.dart';
+import 'package:lexiscan/src/features/scan/scan.dart';
 
 class ScanScreen extends StatefulWidget {
   const ScanScreen({super.key});

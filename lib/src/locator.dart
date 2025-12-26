@@ -1,7 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:lexiscan/src/features/scan/application/scan_store.dart';
-import 'package:lexiscan/src/features/scan/data/image_service.dart';
-import 'package:lexiscan/src/features/scan/data/ocr_service.dart';
+import 'package:lexiscan/src/features/scan/scan.dart';
 
 final getIt = GetIt.instance;
 
@@ -11,6 +9,6 @@ void setupLocator() {
   getIt.registerLazySingleton<OCRService>(OCRService.new);
 
   // Stores (Factories - new instance per request, or Singleton depending on need)
-  // For now, Factory is safer to avoid state persistence between screen pushes if not intended.
-  getIt.registerFactory<ScanStore>(ScanStore.new);
+  // Changed to Singleton to persist state between view switches (Home <-> Result)
+  getIt.registerLazySingleton<ScanStore>(ScanStore.new);
 }
