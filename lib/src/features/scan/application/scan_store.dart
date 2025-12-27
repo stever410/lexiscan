@@ -40,17 +40,23 @@ abstract class ScanStoreBase with Store {
     if (recognizedText == null) {
       return [];
     }
-    final words = <String>[];
-    for (final block in recognizedText!.blocks) {
-      for (final line in block.lines) {
-        for (final element in line.elements) {
-          if (selectedBoxes.contains(element.boundingBox)) {
-            words.add(element.text);
+
+    // Map selectedBoxes to words to preserve selection order
+    return selectedBoxes
+        .map((box) {
+          for (final block in recognizedText!.blocks) {
+            for (final line in block.lines) {
+              for (final element in line.elements) {
+                if (element.boundingBox == box) {
+                  return element.text.toLowerCase();
+                }
+              }
+            }
           }
-        }
-      }
-    }
-    return words;
+          return '';
+        })
+        .where((text) => text.isNotEmpty)
+        .toList();
   }
 
   @action

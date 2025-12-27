@@ -30,6 +30,15 @@ class _ScanResultViewState extends State<ScanResultView>
   bool _showZoomHint = true;
   TapDownDetails? _doubleTapDetails;
 
+  // Helper to animate the indicator update
+  void _animateToPage(int page) {
+    if (_currentPage != page && mounted) {
+      setState(() {
+        _currentPage = page;
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -44,18 +53,29 @@ class _ScanResultViewState extends State<ScanResultView>
 
     // Setup auto-scroll reaction
     final store = GetIt.I<ScanStore>();
-    _autoScrollReaction = reaction((_) => store.selectedWords.length, (length) {
-      if (length > 1) {
-        // Small delay to ensure Carousel is ready
-        Future.delayed(const Duration(milliseconds: 100), () {
-          _carouselController.animateToPage(
-            length - 1,
-            duration: const Duration(milliseconds: 400),
-            curve: Curves.easeOutCubic,
-          );
-        });
-      }
-    });
+    _autoScrollReaction = reaction(
+      (_) => store.selectedWords.length,
+      (length) {
+        if (length > 0) {
+          // Determine if we should scroll to the new item.
+          // If a new item is added (length increased), scroll to the last index.
+          // This assumes items are always appended.
+          Future.delayed(const Duration(milliseconds: 100), () {
+            // Check if controller is attached to avoid errors
+            _carouselController.animateToPage(
+              length - 1,
+              duration: const Duration(milliseconds: 400),
+              curve: Curves.easeOutCubic,
+            );
+
+            // Animate the indicator
+            _animateToPage(length - 1);
+          });
+        }
+      },
+      // Ensure reaction fires when length changes, but not immediately on first build unless needed
+      fireImmediately: false,
+    );
   }
 
   @override
@@ -290,13 +310,10 @@ class _ScanResultViewState extends State<ScanResultView>
                                             );
                                           },
                                           options: CarouselOptions(
-                                            enableInfiniteScroll: true,
                                             viewportFraction: 1.0,
                                             height: double.infinity,
                                             onPageChanged: (index, reason) {
-                                              setState(() {
-                                                _currentPage = index;
-                                              });
+                                              _animateToPage(index);
                                             },
                                           ),
                                         ),
@@ -318,15 +335,22 @@ class _ScanResultViewState extends State<ScanResultView>
                                                 curve: Curves.easeInOut,
                                               );
                                             },
-                                            child: Container(
-                                              width: 8,
+                                            child: AnimatedContainer(
+                                              duration: const Duration(
+                                                milliseconds: 300,
+                                              ),
+                                              width:
+                                                  _currentPage == index
+                                                      ? 24
+                                                      : 8,
                                               height: 8,
                                               margin:
                                                   const EdgeInsets.symmetric(
                                                     horizontal: 4,
                                                   ),
                                               decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
+                                                borderRadius:
+                                                    BorderRadius.circular(4),
                                                 color:
                                                     _currentPage == index
                                                         ? theme
