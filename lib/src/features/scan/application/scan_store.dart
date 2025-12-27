@@ -30,6 +30,9 @@ abstract class ScanStoreBase with Store {
   bool isLoading = false;
 
   @observable
+  ObservableList<String> recentSearches = ObservableList<String>();
+
+  @observable
   String? error;
 
   @computed
@@ -89,6 +92,26 @@ abstract class ScanStoreBase with Store {
   @action
   void clearSelection() {
     selectedBoxes.clear();
+  }
+
+  @action
+  void addRecentSearch(String query) {
+    if (query.isNotEmpty && !recentSearches.contains(query)) {
+      recentSearches.insert(0, query);
+      if (recentSearches.length > 10) {
+        recentSearches.removeLast();
+      }
+    }
+  }
+
+  @action
+  void removeRecentSearch(String query) {
+    recentSearches.remove(query);
+  }
+
+  @action
+  void clearRecentSearches() {
+    recentSearches.clear();
   }
 
   void dispose() {

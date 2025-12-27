@@ -91,6 +91,24 @@ mixin _$ScanStore on ScanStoreBase, Store {
     });
   }
 
+  late final _$recentSearchesAtom = Atom(
+    name: 'ScanStoreBase.recentSearches',
+    context: context,
+  );
+
+  @override
+  ObservableList<String> get recentSearches {
+    _$recentSearchesAtom.reportRead();
+    return super.recentSearches;
+  }
+
+  @override
+  set recentSearches(ObservableList<String> value) {
+    _$recentSearchesAtom.reportWrite(value, super.recentSearches, () {
+      super.recentSearches = value;
+    });
+  }
+
   late final _$errorAtom = Atom(name: 'ScanStoreBase.error', context: context);
 
   @override
@@ -156,12 +174,49 @@ mixin _$ScanStore on ScanStoreBase, Store {
   }
 
   @override
+  void addRecentSearch(String query) {
+    final _$actionInfo = _$ScanStoreBaseActionController.startAction(
+      name: 'ScanStoreBase.addRecentSearch',
+    );
+    try {
+      return super.addRecentSearch(query);
+    } finally {
+      _$ScanStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void removeRecentSearch(String query) {
+    final _$actionInfo = _$ScanStoreBaseActionController.startAction(
+      name: 'ScanStoreBase.removeRecentSearch',
+    );
+    try {
+      return super.removeRecentSearch(query);
+    } finally {
+      _$ScanStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearRecentSearches() {
+    final _$actionInfo = _$ScanStoreBaseActionController.startAction(
+      name: 'ScanStoreBase.clearRecentSearches',
+    );
+    try {
+      return super.clearRecentSearches();
+    } finally {
+      _$ScanStoreBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 imagePath: ${imagePath},
 recognizedText: ${recognizedText},
 selectedBoxes: ${selectedBoxes},
 isLoading: ${isLoading},
+recentSearches: ${recentSearches},
 error: ${error},
 selectedWords: ${selectedWords}
     ''';
