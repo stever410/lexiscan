@@ -51,6 +51,7 @@ lib/
 
 ### 3.2 Widget Structure
 - Keep `build` methods clean. Extract complex sub-trees into separate stateless widgets (e.g., `_WordHighlightOverlay`).
+- **One Widget Per File**: Every new widget (especially stateful ones or those used in multiple places) must be in its own file. Do not stack multiple widget classes in a single file unless they are strictly private helpers.
 - Use `const` constructors wherever possible.
 
 ### 3.3 Responsive Design

@@ -46,6 +46,8 @@ dependencies:
   flutter_lucide: ^1.7.0
   shadcn_ui: ^0.43.0
   get_it: ^9.2.0
+  vector_math: ^2.2.0
+  carousel_slider: ^5.1.1
 
 dev_dependencies:
   flutter_test:
